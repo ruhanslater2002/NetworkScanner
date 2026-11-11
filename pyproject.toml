@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netscan"
+version = "2.2.0"
+description = "Async network host discovery and authorised load testing with a live Rich console UI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "NetScan contributors" }]
+keywords = [
+    "network",
+    "scanner",
+    "discovery",
+    "arp",
+    "icmp",
+    "tcp",
+    "cli",
+    "load-testing",
+    "stress-testing",
+]
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
+]
+dependencies = [
+    "rich>=13.0",
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+tls = ["cryptography>=42"]
+dev = [
+    "psutil>=5.9",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "coverage[toml]>=7.6",
+    "pip-audit>=2.7",
+]
+
+[project.scripts]
+netscan = "netscan.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["netscan*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["SIM105"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["netscan"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+check_untyped_defs = true
+ignore_missing_imports = true
+disallow_untyped_defs = false
+show_error_codes = true
+
+[tool.coverage.run]
+branch = true
+source = ["netscan"]
+omit = ["netscan/__main__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]

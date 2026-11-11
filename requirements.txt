@@ -1,0 +1,15 @@
+# NetScan runtime dependencies
+#
+# The engine itself only needs the Python standard library. Rich powers the
+# console UI. Python 3.10 or newer is required.
+rich>=13.0
+
+# Python 3.10 has no tomllib in the standard library.
+tomli>=2.0; python_version < "3.11"
+
+# Optional: accurate local netmask detection for the automatic target.
+# Without it, NetScan assumes a /24 for the local network.
+# psutil>=5.9
+
+# Optional: certificate metadata for `netscan --tls-info`.
+# cryptography>=42
